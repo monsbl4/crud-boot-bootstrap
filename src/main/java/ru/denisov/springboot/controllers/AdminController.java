@@ -35,19 +35,24 @@ public class AdminController {
         model.addAttribute("users", userServiceImp.index());
         model.addAttribute("roles", roleService.getRoles());
         model.addAttribute("principalUser", userServiceImp.getUserByUsername(principal.getName()));
+        model.addAttribute("addUser", new User());
         return "admin/index";
     }
 
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult,
-                          @RequestParam(value = "select_role", required = false) String role) {
-        Set<Role>roles = new HashSet<>();
-        roles.add(roleService.getRoleByName(role));
-        user.setRoles(roles);
+                          @RequestParam(value = "select_role", required = false) String [] role) {
         if (bindingResult.hasErrors()){
-            return "admin/index";
+            return "addUser";
         }
+
+        Set<Role>rolesSet = new HashSet<>();
+        for (String roles : role) {
+            rolesSet.add(roleService.getRoleByName(roles));
+        }
+        user.setRoles(rolesSet);
+
 
         userServiceImp.saveUser(user);
         return "redirect:/admin/";
@@ -55,11 +60,18 @@ public class AdminController {
 
 
     @PatchMapping("/update")
-    public String updateUser(@ModelAttribute("user") User user,
-                             @RequestParam(required = false, value = "select_role") String role){
-        Set<Role>roles = new HashSet<>();
-        roles.add(roleService.getRoleByName(role));
-        user.setRoles(roles);
+    public String updateUser(@ModelAttribute("user") User user, BindingResult bindingResult,
+                             @RequestParam(required = false, value = "select_role") String [] role){
+        Set<Role>rolesSet = new HashSet<>();
+//        roles.add(roleService.getRoleByName(role));
+        for (String roles : role) {
+            rolesSet.add(roleService.getRoleByName(roles));
+        }
+        user.setRoles(rolesSet);
+        if (bindingResult.hasErrors()){
+            return "admin/index";
+        }
+
         userServiceImp.update(user);
         return "redirect:/admin";
     }

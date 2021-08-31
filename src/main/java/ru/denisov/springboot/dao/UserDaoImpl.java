@@ -33,7 +33,7 @@ public class UserDaoImpl implements ru.denisov.springboot.dao.UserDao {
 
 
     @Transactional
-    public void update(User updatedUser) { ;
+    public void update(User updatedUser) {
         entityManager.merge(updatedUser);
     }
     @Transactional

@@ -117,7 +117,7 @@
                                                                                class="col-form-label">Password:</label>
                                                                         <input type="text" class="form-control"
                                                                                id="passwordEdit" name="password"
-                                                                               th:value="${user.getPassword()}"required>
+                                                                               th:value="${user.getPassword()}" required>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="usernameEdit"
@@ -144,7 +144,7 @@
                                                                     <div class="form-group">
                                                                         <label for="ageEdit"
                                                                                class="col-form-label">age:</label>
-                                                                        <input type="text" class="form-control"
+                                                                        <input type="number" class="form-control"
                                                                                id="ageEdit" name="age"
                                                                                th:value="${user.getAge()}" required>
                                                                     </div>
@@ -289,18 +289,21 @@
                             <h4>add user</h4>
                             <div class="row">
                                 <div class="col-3">
-                                    <form th:method="POST" th:action="@{/admin}" th:object="${users}">
+                                    <form th:method="POST" th:action="@{/admin}" th:object="${addUser}">
                                         <div class="form-group">
                                             <div>
                                                 <label for="email" class="col-form-label">Email</label>
-                                            </div>
+
                                             <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
                                         </div>
                                         <div class="form-group">
                                             <div>
                                                 <label for="username" class="col-form-label">Username</label>
-                                            </div>
+
                                             <input type="text" class="form-control" id="username" name="username" required>
+                                            <div class="invalid-feedback">Укажите логин</div>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <div>
@@ -324,7 +327,7 @@
                                             <div>
                                                 <label for="age" class="col-form-label">Age</label>
                                             </div>
-                                            <input type="text" class="form-control" id="age" name="age" required>
+                                            <input type="number" class="form-control" id="age" name="age" required>
                                         </div>
 
                                         <div class="form-group">
