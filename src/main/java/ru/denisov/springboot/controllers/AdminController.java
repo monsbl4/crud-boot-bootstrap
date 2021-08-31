@@ -40,11 +40,12 @@ public class AdminController {
     }
 
 
+
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user, BindingResult bindingResult,
                           @RequestParam(value = "select_role", required = false) String [] role) {
         if (bindingResult.hasErrors()){
-            return "addUser";
+            return "admin/index";
         }
 
         Set<Role>rolesSet = new HashSet<>();
